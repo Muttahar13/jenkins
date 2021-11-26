@@ -1,20 +1,22 @@
 pipeline {
-    agent {
-        label '!windows'
-    }
+   agent any
 
-    environment {
-        DISABLE_AUTH = 'true'
-        DB_ENGINE    = 'sqlite'
-    }
-
-    stages {
-        stage('Build') {
-            steps {
-                echo "${ifconfig}"
-                echo "DISABLE_AUTH is ${DISABLE_AUTH}"
-                sh 'printenv'
-            }
+   stages {
+      stage('Kaam') {
+        steps {
+          echo 'Building...'
+          echo "Running ${env.BUILD_ID} ${env.BUILD_DISPLAY_NAME} on ${env.NODE_NAME} and JOB ${env.JOB_NAME}"
         }
-    }
+   }
+   stage('Hoaya') {
+     steps {
+        echo 'Testing...'
+     }
+   }
+   stage('hai') {
+     steps {
+       echo 'Deploying...'
+     }
+   }
+  }
 }
