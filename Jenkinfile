@@ -9,5 +9,25 @@ pipeline {
             }
         }
     }
-}
+       stage('SSH and run shell commands')
+        {
+            steps { 
+                container('cbsp-deployer') {
+                    script {
+                        sshagent(['ssh-ebates-util-ali']) {
+                        def workDir = '/tmp/$AppDir-temp'
+                        sh """ssh -tt aahmed@dbadmin01.mgmt.ebatesqa.local -o StrictHostKeyChecking=no
+                        echo 'test1'>/tmp/TEST_FILE1
+                        set +e
+                        sudo su postgres
+                        echo 'test'>/tmp/TEST_FILE
+                        bash /home/postgres/iplocation_test_qa.sh
+                        a=\'psql -U ebates -h qa-rc401.nonprod.ebates.local GEOLOCATION_RC4 -f ip3.sql\'
+                        """
+                        }
+                    }
+                }
+            }
+        }
+      }
 
