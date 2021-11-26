@@ -1,10 +1,14 @@
 pipeline {
-    agent { docker { image 'python:3.5.1' } }
+agent none
     stages {
-        stage('build') {
-            steps {
-                sh 'python --version'
-            }
+        stage("SomeStageName") {
+     agent { label 'exampleRunOnlyOnLinuxNode' }
+     steps {
+         script {
+              println "\n\n-- Running on machine: " + "hostname".execute().text
+         }
+     }
+ }
         }
     }
 }
