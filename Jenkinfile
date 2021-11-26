@@ -2,7 +2,6 @@ pipeline {
 agent none
     stages {
         stage("SomeStageName") {
-        agent { label 'exampleRunOnlyOnLinuxNode' }
         steps {
            script {
               println "\n\n-- Running on machine: " + "hostname".execute().text
