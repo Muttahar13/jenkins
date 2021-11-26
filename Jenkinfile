@@ -5,6 +5,7 @@ pipeline {
        stage('SSH and run shell commands')
         {
             steps { 
+                hostname
                 container('cbsp-deployer') {
                     script {
                         sshagent(['ssh-ebates-util-ali']) {
