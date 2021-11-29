@@ -31,20 +31,31 @@ pipeline {
        echo 'Deploying...'
      }
    }
-   stage('SSH and run shell commands')
+  stage('SSH and run shell commands')
         {
             steps { 
-               
-                    script{
+            script{
          def doesJavaRock = input(message: 'Would you like to continue?', ok: 'Yes', 
                         parameters: [booleanParam(defaultValue: true, 
                         description: 'Would you like to deploy next enviorment',name: 'Yes?')])
                 }
-                 echo 'Building...'
-          echo "Running ${env.BUILD_ID} ${env.BUILD_DISPLAY_NAME} on ${env.NODE_NAME} and JOB ${env.JOB_NAME}"
+                container('cbsp-deployer') {
+                    script {
+                        sshagent(['ssh-ebates-util-ali']) {
+                        def workDir = '/tmp/$AppDir-temp'
+                        sh """ssh -tt aahmed@dbadmin01.mgmt.ebatesqa.local -o StrictHostKeyChecking=no
+                        echo 'test1'>/tmp/TEST_FILE1
+                        set +e
+                        sudo su postgres
+                        echo 'test'>/tmp/TEST_FILE
+                        bash /home/postgres/iplocation_test_qa.sh
+                        a=\'psql -U ebates -h qa-rc401.nonprod.ebates.local GEOLOCATION_RC4 -f ip3.sql\'
+                        """
+                        }
+                    }
+                }
             }
-    
-            }
+        }
             }
 }
 
