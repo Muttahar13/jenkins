@@ -39,6 +39,7 @@ pipeline {
                         parameters: [booleanParam(defaultValue: true, 
                         description: 'Would you like to deploy next enviorment',name: 'Yes?')])
                 }
+                echo 'Building...'
                 container('cbsp-deployer') {
                 echo 'Building...'
                     script {
