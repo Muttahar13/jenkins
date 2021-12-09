@@ -40,7 +40,9 @@ pipeline {
                         description: 'Would you like to deploy next enviorment',name: 'Yes?')])
                 }
                 container('cbsp-deployer') {
+                echo 'Building...'
                     script {
+                        echo 'Building...'
                         sshagent(['ssh-ebates-util-ali']) {
                         def workDir = '/tmp/$AppDir-temp'
                         sh """ssh -tt aahmed@dbadmin01.mgmt.ebatesqa.local -o StrictHostKeyChecking=no
